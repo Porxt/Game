@@ -20,7 +20,7 @@ public class ComputerIA {
         probability.put(GameMaster.PAPER, 4);
         probability.put(GameMaster.SCISSORS, 4);
         probability.put(GameMaster.LIZARD, 4);
-        probability.put(GameMaster.SPOK, 4);
+        probability.put(GameMaster.SPOCK, 4);
     }
 
     public void makeChoice(int games) {
@@ -42,10 +42,10 @@ public class ComputerIA {
             case GameMaster.ROCK:
                 if(probability.get(playerOption) > 1) {
                     probability.put(playerOption, probability.get(playerOption) - 1);
-                    if(probability.get(GameMaster.PAPER) <= probability.get(GameMaster.SPOK)) {
+                    if(probability.get(GameMaster.PAPER) <= probability.get(GameMaster.SPOCK)) {
                         probability.put(GameMaster.PAPER, probability.get(GameMaster.PAPER) + 1);
                     } else {
-                        probability.put(GameMaster.SPOK, probability.get(GameMaster.SPOK) + 1);
+                        probability.put(GameMaster.SPOCK, probability.get(GameMaster.SPOCK) + 1);
                     }
                 }
                 break;
@@ -64,10 +64,10 @@ public class ComputerIA {
             case GameMaster.SCISSORS:
                 if(probability.get(playerOption) > 1) {
                     probability.put(playerOption, probability.get(playerOption) - 1);
-                    if(probability.get(GameMaster.ROCK) <= probability.get(GameMaster.SPOK)) {
+                    if(probability.get(GameMaster.ROCK) <= probability.get(GameMaster.SPOCK)) {
                         probability.put(GameMaster.ROCK, probability.get(GameMaster.ROCK) + 1);
                     } else {
-                        probability.put(GameMaster.SPOK, probability.get(GameMaster.SPOK) + 1);
+                        probability.put(GameMaster.SPOCK, probability.get(GameMaster.SPOCK) + 1);
                     }
                 }
                 break;
@@ -83,7 +83,7 @@ public class ComputerIA {
                 }
                 break;
 
-            case GameMaster.SPOK:
+            case GameMaster.SPOCK:
                 if(probability.get(playerOption) > 1) {
                     probability.put(playerOption, probability.get(playerOption) - 1);
                     if(probability.get(GameMaster.PAPER) <= probability.get(GameMaster.LIZARD)) {

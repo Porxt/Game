@@ -15,15 +15,18 @@ public class Board extends JFrame implements ActionListener {
     private JButton buttonPaper;
     private JButton buttonScissors;
     private JButton buttonLizard;
-    private JButton buttonSpok;
+    private JButton buttonSpock;
 
     // Board options
     private JButton buttonNewGame;
     private JButton buttonShowScoreboard;
     private JButton buttonExit;
 
+    Timer showResult = new Timer(800, this);
+
     private final GameMaster master = new GameMaster();
     private final ComputerIA ia = new ComputerIA();
+    private final GameCanvas canvas = new GameCanvas();
 
     public Board() {
         super("Let's Play!!");
@@ -31,6 +34,7 @@ public class Board extends JFrame implements ActionListener {
         setBounds(10, 10, 500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+        setResizable(false);
     }
 
     private void initComponents() {
@@ -54,9 +58,9 @@ public class Board extends JFrame implements ActionListener {
         buttonLizard.setEnabled(false);
         buttonLizard.addActionListener(this);
 
-        buttonSpok = new JButton("Spok");
-        buttonSpok.setEnabled(false);
-        buttonSpok.addActionListener(this);
+        buttonSpock = new JButton("Spok");
+        buttonSpock.setEnabled(false);
+        buttonSpock.addActionListener(this);
 
         // Board options
         buttonNewGame = new JButton("Nuevo juego");
@@ -78,8 +82,10 @@ public class Board extends JFrame implements ActionListener {
         playerOptions.add(buttonPaper);
         playerOptions.add(buttonScissors);
         playerOptions.add(buttonLizard);
-        playerOptions.add(buttonSpok);
+        playerOptions.add(buttonSpock);
         add(playerOptions, BorderLayout.SOUTH);
+
+        add(canvas, BorderLayout.CENTER);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -92,8 +98,9 @@ public class Board extends JFrame implements ActionListener {
             buttonPaper.setEnabled(true);
             buttonScissors.setEnabled(true);
             buttonLizard.setEnabled(true);
-            buttonSpok.setEnabled(true);
+            buttonSpock.setEnabled(true);
             buttonNewGame.setEnabled(false);
+            canvas.clear();
         } else if(e.getSource() == buttonShowScoreboard) {
             JOptionPane.showMessageDialog(
                     this,
@@ -103,54 +110,43 @@ public class Board extends JFrame implements ActionListener {
             );
         } else if(e.getSource() == buttonRock) {
             playerChoice = GameMaster.ROCK;
-            ia.updateRoulette(playerChoice);
-            buttonRock.setEnabled(false);
-            buttonPaper.setEnabled(false);
-            buttonScissors.setEnabled(false);
-            buttonLizard.setEnabled(false);
-            buttonSpok.setEnabled(false);
-            buttonNewGame.setEnabled(true);
             GameMaster.playerWins(ia.getComputerChoice(), playerChoice, master);
+            canvas.showHands(playerChoice, ia.getComputerChoice());
+            showResult.start();
+            ia.updateRoulette(playerChoice);
         } else if(e.getSource() == buttonPaper) {
             playerChoice = GameMaster.PAPER;
-            ia.updateRoulette(playerChoice);
-            buttonRock.setEnabled(false);
-            buttonPaper.setEnabled(false);
-            buttonScissors.setEnabled(false);
-            buttonLizard.setEnabled(false);
-            buttonSpok.setEnabled(false);
-            buttonNewGame.setEnabled(true);
             GameMaster.playerWins(ia.getComputerChoice(), playerChoice, master);
+            canvas.showHands(playerChoice, ia.getComputerChoice());
+            showResult.start();
+            ia.updateRoulette(playerChoice);
         } else if(e.getSource() == buttonScissors) {
             playerChoice = GameMaster.SCISSORS;
-            ia.updateRoulette(playerChoice);
-            buttonRock.setEnabled(false);
-            buttonPaper.setEnabled(false);
-            buttonScissors.setEnabled(false);
-            buttonLizard.setEnabled(false);
-            buttonSpok.setEnabled(false);
-            buttonNewGame.setEnabled(true);
             GameMaster.playerWins(ia.getComputerChoice(), playerChoice, master);
+            canvas.showHands(playerChoice, ia.getComputerChoice());
+            showResult.start();
+            ia.updateRoulette(playerChoice);
         } else if(e.getSource() == buttonLizard) {
             playerChoice = GameMaster.LIZARD;
-            ia.updateRoulette(playerChoice);
-            buttonRock.setEnabled(false);
-            buttonPaper.setEnabled(false);
-            buttonScissors.setEnabled(false);
-            buttonLizard.setEnabled(false);
-            buttonSpok.setEnabled(false);
-            buttonNewGame.setEnabled(true);
             GameMaster.playerWins(ia.getComputerChoice(), playerChoice, master);
+            canvas.showHands(playerChoice, ia.getComputerChoice());
+            showResult.start();
+            ia.updateRoulette(playerChoice);
+        } else if(e.getSource() == buttonSpock) {
+            playerChoice = GameMaster.SPOCK;
+            GameMaster.playerWins(ia.getComputerChoice(), playerChoice, master);
+            canvas.showHands(playerChoice, ia.getComputerChoice());
+            showResult.start();
+            ia.updateRoulette(playerChoice);
         } else {
-            playerChoice = GameMaster.SPOK;
-            ia.updateRoulette(playerChoice);
+            canvas.showResult(master.getGameResult());
             buttonRock.setEnabled(false);
             buttonPaper.setEnabled(false);
             buttonScissors.setEnabled(false);
             buttonLizard.setEnabled(false);
-            buttonSpok.setEnabled(false);
+            buttonSpock.setEnabled(false);
             buttonNewGame.setEnabled(true);
-            GameMaster.playerWins(ia.getComputerChoice(), playerChoice, master);
+            showResult.stop();
         }
     }
 }
