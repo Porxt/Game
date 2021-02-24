@@ -27,7 +27,7 @@ public class ComputerIA {
         if(games <= 5) {
             computerChoice = (int) (Math.random() * 5 + 1);
         } else {
-            computerChoice = (int) (Math.random() * 20 + 1);
+            computerChoice = (int) (Math.random() * 20);
             computerChoice = roulette[computerChoice];
         }
     }
